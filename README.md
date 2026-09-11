@@ -1,6 +1,6 @@
-# 
+# Testing with pytest
 
-
+The pytest testing framework in depth: fixtures, parametrization, mocking, coverage, and configuration. Assumes you already know Python (see this library's python-basics course) and general testing vocabulary (see testing-in-software-engineering) — this course is about the pytest tool itself.
 
 Part of the [Yaaddi](https://github.com/yaaddi-courses) course catalog — a
 spaced-repetition flashcard course, ready to build and validate with the
