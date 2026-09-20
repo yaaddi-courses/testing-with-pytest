@@ -2,11 +2,11 @@ id,unit_id,type,role,related_main_id,prompt,options,correct_index,image,audio,ex
 1,1,multiple_choice,main,,pytest tests are written as:,Functions|Classes only|Modules,0,,,"def test_addition():
     assert 2 + 2 == 4  # a plain function is enough, no class needed"
 2,1,true_false,preview,1,pytest tests can be plain functions.,,true,,,"Yes, that's right; pytest is very flexible and doesn't require you to wrap your tests in classes or methods. It just needs the function to be discoverable by the test runner."
-3,1,true_false,exercise,1,Tests must be class methods.,,true,,,unittest requires subclassing TestCase and writing test methods on it.
+3,1,true_false,exercise,1,Tests must be class methods.,,true,,,The old-school approach requires subclassing a base test case class.
 4,1,true_false,exercise,1,pytest functions don't need self.,,true,,,Plain functions have no self parameter — that's only for class methods.
 5,1,select_blank,exercise,1,"pytest tests are plain ___, not classes.",functions|modules|classes,0,,,"They are plain functions because pytest is designed to keep things simple, allowing you to write tests without the overhead of defining full classes."
 6,1,true_false,exercise,1,You must subclass TestCase for pytest.,,false,,,That's the standard framework requirement pytest was built to remove.
-7,1,multiple_choice,exercise,1,Tests live inside a:,Class|Function|File,0,,,"The standard `unittest` framework is built around object-oriented principles, so your test methods must live inside a dedicated test class that inherits from `unittest.TestCase`."
+7,1,multiple_choice,exercise,1,Tests live inside a:,Class|Function|File,0,,,The old-school class-based testing style requires your test methods to live inside a dedicated test class that inherits from a base test-case class.
 8,1,match_pairs,exercise,1,Match framework to its test unit.,pytest↔function|class tests,,,,"Pytest favors simple functions, while other frameworks require defining tests inside classes."
 9,1,multiple_choice,main,,pytest checks results using:,assert|assertEqual|checkThat,0,,,"assert result == 4  # instead of self.assertEqual(result, 4)"
 10,1,true_false,preview,9,pytest uses Python's assert keyword.,,true,,,"Correct; instead of requiring its own assertion methods (like `assertEqual`), pytest simply runs the built-in `assert` statement, making your code feel more like regular Python logic."
@@ -165,7 +165,7 @@ def sample_user():
 217,10,multiple_choice,exercise,215,"After yield, cleanup code is:",Teardown|Setup|Unused,0,,,"The code that runs after the test logic has completed is called teardown, and this is where you handle cleanup tasks. Setup always executes before the test starts."
 218,10,true_false,exercise,215,A fixture can yield a value tests use.,,true,,,Whatever you pass to yield becomes the fixture's value inside the test function.
 219,10,select_blank,exercise,215,yield fixtures split setup from ___.,teardown|imports|assertions,0,,,Using yield fixtures is specifically designed to split a single fixture into two distinct phases: setup (before yield) and teardown (after yield).
-220,10,multiple_choice,exercise,215,return fixtures skip:,Teardown|Setup|Injection,0,,,A plain return fixture has no built-in place to run cleanup code.
+220,10,multiple_choice,exercise,215,What do return fixtures never run?,Teardown|Setup|Injection,0,,,A plain return fixture has no built-in place to run cleanup code.
 221,10,true_false,exercise,215,Only one yield fixture per file is allowed.,,false,,,A file can define as many yield fixtures as it needs.
 222,10,multiple_choice,exercise,215,The value tests receive comes from:,Before yield|After yield|Neither,0,,,"The value the test receives is the object that was yielded, which happens right before the test function executes its main body of code."
 223,10,code_fill,exercise,215,Complete the fixture that uses yield.,"@pytest.fixture
@@ -199,7 +199,7 @@ def test_positive(n):
 245,11,select_blank,exercise,243,Parametrize's second argument is a list of ___.,values|fixtures|imports,0,,,"The second argument must be a sequence containing the specific input values you want to test against. It is not a list of fixtures, but rather the actual data that those tests will use."
 246,11,multiple_choice,exercise,243,The parametrized name becomes a:,Test parameter|A fixture|Class name,0,,,"When you parametrize a test, the resulting variable inside the function signature acts as a standard test parameter. This allows your test to accept and process multiple sets of input values."
 247,11,true_false,exercise,243,You can parametrize with tuples for multiple args.,,true,,,"parametrize('a,b', [(1, 2), (3, 4)]) varies two arguments together."
-248,11,multiple_choice,exercise,243,The parametrize decorator comes from:,pytest.mark|unittest|Python core,0,,,"Since parametrization is an extension feature specific to pytest's testing framework, it lives within the `pytest.mark` module. It is not part of standard Python core or the built-in unittest library."
+248,11,multiple_choice,exercise,243,The parametrize decorator comes from:,pytest.mark|CLI flags|Python core,0,,,"Since parametrization is an extension feature specific to pytest's testing framework, it lives within the `pytest.mark` module. It is not part of standard Python core or Python's built-in testing module."
 249,11,true_false,exercise,243,Parametrize values must be pytest fixtures.,,false,,,"They're just plain Python values — numbers, strings, tuples, anything."
 250,11,command_output,exercise,243,How many test runs does this create?,"@pytest.mark.parametrize('n', [1, 2, 3])
 def test_it(n):
