@@ -2,20 +2,20 @@ id,unit_id,type,role,related_main_id,prompt,options,correct_index,image,audio,ex
 1,1,multiple_choice,main,,pytest tests are written as:,Functions|Classes only|Modules,0,,,"def test_addition():
     assert 2 + 2 == 4  # a plain function is enough, no class needed"
 2,1,true_false,preview,1,pytest tests can be plain functions.,,true,,,"Yes, that's right; pytest is very flexible and doesn't require you to wrap your tests in classes or methods. It just needs the function to be discoverable by the test runner."
-3,1,true_false,exercise,1,unittest tests must be class methods.,,true,,,unittest requires subclassing TestCase and writing test methods on it.
+3,1,true_false,exercise,1,Tests must be class methods.,,true,,,unittest requires subclassing TestCase and writing test methods on it.
 4,1,true_false,exercise,1,pytest functions don't need self.,,true,,,Plain functions have no self parameter — that's only for class methods.
 5,1,select_blank,exercise,1,"pytest tests are plain ___, not classes.",functions|modules|classes,0,,,"They are plain functions because pytest is designed to keep things simple, allowing you to write tests without the overhead of defining full classes."
-6,1,true_false,exercise,1,You must subclass TestCase for pytest.,,false,,,That's the unittest requirement pytest was built to remove.
-7,1,multiple_choice,exercise,1,unittest tests live inside a:,Class|Function|File,0,,,"The standard `unittest` framework is built around object-oriented principles, so your test methods must live inside a dedicated test class that inherits from `unittest.TestCase`."
-8,1,match_pairs,exercise,1,Match framework to its test unit.,pytest↔function|unittest↔class method,,,,"This is key: Pytest favors simple functions, while `unittest` strictly requires you to define tests as methods within a class structure."
+6,1,true_false,exercise,1,You must subclass TestCase for pytest.,,false,,,That's the standard framework requirement pytest was built to remove.
+7,1,multiple_choice,exercise,1,Tests live inside a:,Class|Function|File,0,,,"The standard `unittest` framework is built around object-oriented principles, so your test methods must live inside a dedicated test class that inherits from `unittest.TestCase`."
+8,1,match_pairs,exercise,1,Match framework to its test unit.,pytest↔function|class tests,,,,"Pytest favors simple functions, while other frameworks require defining tests inside classes."
 9,1,multiple_choice,main,,pytest checks results using:,assert|assertEqual|checkThat,0,,,"assert result == 4  # instead of self.assertEqual(result, 4)"
 10,1,true_false,preview,9,pytest uses Python's assert keyword.,,true,,,"Correct; instead of requiring its own assertion methods (like `assertEqual`), pytest simply runs the built-in `assert` statement, making your code feel more like regular Python logic."
-11,1,true_false,exercise,9,unittest uses self.assertEqual for checks.,,true,,,unittest needs its own methods like assertEqual instead of plain assert.
-12,1,multiple_choice,exercise,9,Which keyword does pytest use to check?,assert|assertEqual|verify,0,,,"Pytest uses the built-in Python keyword `assert` for checks, which automatically raises an error if the condition fails. Methods like assertEqual belong to other testing frameworks, such as unittest."
+11,1,true_false,exercise,9,Does the standard test library use specialized check methods?,,true,,,The standard testing framework needs its own methods like assertEqual instead of plain assert.
+12,1,multiple_choice,exercise,9,Which keyword does pytest use to check?,assert|assertEqual|verify,0,,,Pytest uses the built-in Python keyword `assert`. Other testing frameworks use specialized methods like `assertEqual`.
 13,1,true_false,exercise,9,pytest needs special assert methods.,,false,,,Plain assert is all pytest needs — no special methods to memorize.
 14,1,select_blank,exercise,9,pytest replaces assertEqual with plain ___.,assert|print|self,0,,,"Pytest simplifies testing by allowing you to use Python's native `assert` statement directly, eliminating the need for specialized methods like `assertEqual`."
 15,1,true_false,exercise,9,assert is a built-in Python keyword.,,true,,,pytest doesn't invent assert — it just reads more into your existing assert statements.
-16,1,multiple_choice,exercise,9,self.assertEqual belongs to which tool?,unittest|pytest|pip,0,,,"The syntax `self.assertEqual` is specific to Python's built-in `unittest` framework, which requires you to use methods attached to a test class instance (`self`)."
+16,1,multiple_choice,exercise,9,Which tool uses this assertion?,Built-in testing|Another framework|Package installer,0,,,"This specific method is part of Python's built-in testing library, which requires using methods attached to a test class instance (`self`)."
 17,2,multiple_choice,main,,You install pytest using:,pip|npm|apt,0,,,pip install pytest — the standard way to add pytest to a Python environment.
 18,2,true_false,preview,17,pip install pytest installs pytest.,,true,,,"This is correct because `pip` is Python's package installer, and running this command downloads and sets up the pytest library for use in your environment."
 19,2,true_false,exercise,17,pytest installs via pip.,,true,,,pip is Python's package installer
@@ -52,7 +52,7 @@ id,unit_id,type,role,related_main_id,prompt,options,correct_index,image,audio,ex
 50,4,true_false,preview,49,assert fails when its expression is False.,,true,,,"That's exactly right; `assert` checks if a condition is True, and if it evaluates to anything else (like False), it immediately raises an AssertionError."
 51,4,true_false,exercise,49,assert 1 == 1 passes silently.,,true,,,A True expression means assert does nothing and the test moves on.
 52,4,code_fill,exercise,49,Complete: check status code equals 200.,assert response.status_code == ___|200,,,,"We use 200 because it is the standard HTTP status code for 'OK,' indicating that the request was processed successfully. Using any other number would check for a different outcome, like an error or redirection."
-53,4,multiple_choice,exercise,49,assert 5 > 10 will:,Fail|Pass|Skip,0,,,"The expression 5 > 10 evaluates to False, and since 'assert' requires its condition to be True, the test will fail immediately. It won't pass because the assertion failed."
+53,4,multiple_choice,exercise,49,assert 5 > 10 will:,Fail|Pass|Bypass,0,,,"The expression 5 > 10 evaluates to False, and since 'assert' requires its condition to be True, the test will fail immediately. It won't pass because the assertion failed."
 54,4,true_false,exercise,49,assert needs parentheses like a function.,,false,,,assert is a keyword
 55,4,select_blank,exercise,49,assert stops the test if the expression is ___.,false|true|empty,0,,,"If the assertion expression evaluates to False, it means the expected condition was violated, causing the test run to stop immediately. If it is True, the test continues normally."
 56,4,true_false,exercise,49,assert works with any boolean expression.,,true,,,This is correct because 'assert' simply checks if any given expression evaluates to True; it doesn't care how complex or simple that underlying boolean logic is.
@@ -61,14 +61,14 @@ id,unit_id,type,role,related_main_id,prompt,options,correct_index,image,audio,ex
 59,4,true_false,exercise,57,The message shows only on failure.,,true,,,A passing assert never shows the message — it's silent either way.
 60,4,code_fill,exercise,57,Complete the failure message text.,"assert total == 0, 'cart is ___'|empty",,,,"When you provide a descriptive string as the second argument to assert, it populates the failure output, making it clear what condition was expected and failed (e.g., 'cart is empty')."
 61,4,true_false,exercise,57,You must use a comma before the message.,,true,,,The comma separates the checked expression from the message text.
-62,4,multiple_choice,exercise,57,The custom message helps you:,Debug|Slow tests|Skip tests,0,,,"Custom messages are primarily for debugging because they add descriptive text to the failure output, telling you exactly what condition was violated."
+62,4,multiple_choice,exercise,57,The custom message helps you:,Debug|Slow tests|Bypass tests,0,,,"Custom messages are primarily for debugging because they add descriptive text to the failure output, telling you exactly what condition was violated."
 63,4,true_false,exercise,57,The message runs even if assert passes.,,false,,,It's only ever shown when the assertion actually fails.
 64,4,select_blank,exercise,57,"assert expr, ___ adds context on failure.",message|nothing|loop,0,,,"Including a descriptive string as the second argument to assert ensures that when the test fails, you get useful context explaining why it failed."
 65,5,multiple_choice,main,,"On failure, pytest shows the:",Actual values|Just False|Nothing,0,,,assert x == 4 failing shows something like 'assert 3 == 4' — pytest rewrites the assert to reveal what x actually was.
 66,5,true_false,preview,65,pytest shows actual values on failure.,,true,,,"This is true; when an assertion fails, pytest automatically prints both the expected and actual values, which is crucial for debugging."
 67,5,true_false,exercise,65,This works without a custom message.,,true,,,You get the actual values for free
-68,5,multiple_choice,exercise,65,This pytest feature is called:,Assertion rewriting|Test discovery|Fixture scope,0,,,"The feature that allows you to modify or customize how assertions behave is called 'assertion rewriting,' letting you change failure reporting without changing test logic."
-69,5,true_false,exercise,65,unittest shows this detail by default.,,false,,,"unittest just says the assertion failed, unless you also pass a custom message."
+68,5,multiple_choice,exercise,65,This pytest feature is called:,Assertion rewriting|Test discovery|Scope setting,0,,,The feature modifies how test checks report failures.
+69,5,true_false,exercise,65,Does it show failure details by default?,,false,,,"The framework only states that the assertion failed, unless you also pass a custom message."
 70,5,select_blank,exercise,65,pytest ___ assert to add detail.,rewrites|deletes|ignores,0,,,"You use `pytest`'s context managers to effectively rewrite the assertion block and capture detailed failure information, which is much more powerful than simply deleting or ignoring the check."
 71,5,true_false,exercise,65,Rewriting only happens on failing asserts.,,true,,,A passing assert is silent — the extra detail only appears on failure.
 72,5,multiple_choice,exercise,65,Assertion rewriting saves you from writing:,Manual messages|Test files|Fixtures,0,,,"By using advanced assertion techniques, pytest automatically captures rich details upon failure, meaning you don't have to manually write verbose messages for every single test case."
@@ -231,16 +231,16 @@ def n(request):
 305,13,select_blank,exercise,301,skipif needs a boolean ___ to check.,condition|decorator|fixture,0,,,"Since skipif is designed for conditional skipping, it requires a boolean condition that evaluates whether or not the test should proceed."
 306,13,multiple_choice,exercise,301,Why give skip a reason=?,Explains why|Runs faster|Fixes bug,0,,,Providing a reason is purely for documentation; it helps other developers understand exactly why this test was temporarily disabled without changing its actual behavior.
 307,13,true_false,exercise,301,skip needs a condition argument.,,false,,,"skip always skips, no condition needed — that's skipif's whole job."
-308,13,multiple_choice,exercise,301,Which marker needs no condition?,skip|skipif|parametrize,0,,,"The skip marker is unique because it tells the test runner to ignore the test without needing any conditional logic. Markers like skipif require a specific condition check, and parametrize requires defining parameters."
+308,13,multiple_choice,exercise,301,Which tag needs no condition?,skip|skipif|parametrize,0,,,The special tag tells the test runner to ignore the test without needing any conditional logic. Other tags require specific checks or parameters.
 309,13,multiple_choice,main,,xfail marks a test as expected to?,Fail|Pass|Skip,0,,,"@pytest.mark.xfail(reason=""known bug"") lets a known-failing test stay in the suite without breaking the build."
 310,13,true_false,preview,309,xfail means the test is expected to fail.,,true,,,"That's correct; using xfail explicitly marks that the test is expected to fail, which is helpful for tracking known bugs or regressions."
 311,13,true_false,exercise,309,An xfail test failing breaks the build.,,false,,,"It's reported as ""xfailed"", not counted as a failure."
 312,13,multiple_choice,exercise,309,"If an xfail test passes, it's reported as?",XPASS|XFAIL|ERROR,0,,,XPASS flags a surprising pass — worth checking if the bug actually got fixed.
-313,13,select_blank,exercise,309,XPASS means the test ___.,passed|failed|errored,0,,,XPASS means the test passed when you were actually expecting it to fail. This marker helps track cases where a failure was anticipated but didn't happen.
+313,13,select_blank,exercise,309,XPASS means the test ___.,passed|failed|errored,0,,,XPASS means the test passed when you were actually expecting it to fail. This tag helps track cases where a failure was anticipated but didn't happen.
 314,13,multiple_choice,exercise,309,xfail is useful for a test with a?,Known bug|New feature|Fast runtime,0,,,"You use xfail primarily for known bugs—it lets you write the test now, knowing it will fail until the underlying issue is fixed. It’s not meant for new features or performance checks."
 315,13,true_false,exercise,309,xfail deletes the test from the suite.,,false,,,"It keeps running the test, it just doesn't fail the build over it."
 316,13,multiple_choice,exercise,309,strict=True on xfail turns XPASS into a?,Failure|Pass|Skip,0,,,"With strict=True, an unexpected pass is treated as a real failure — handy once a bug gets fixed."
-317,13,select_blank,exercise,309,xfail takes an optional ___ string.,reason|fixture|marker,0,,,"The optional string provided to xfail is a 'reason,' which allows you to document why this test is expected to fail right in the code."
+317,13,select_blank,exercise,309,xfail takes an optional ___ string.,reason|fixture|tag,0,,,"The optional string provided to xfail is a 'reason,' which allows you to document why this test is expected to fail right in the code."
 318,14,multiple_choice,main,,A custom marker looks like?,@pytest.mark.slow|def slow():|import slow,0,,,"You can tag tests with any name, e.g. @pytest.mark.slow, then run just that group with -m slow."
 319,14,true_false,preview,318,@pytest.mark.slow tags a test as slow.,,true,,,
 320,14,true_false,exercise,318,Custom markers can have any name.,,true,,,
