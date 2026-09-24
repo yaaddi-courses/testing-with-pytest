@@ -4,7 +4,7 @@
   "description": "The pytest testing framework in depth: fixtures, parametrization, mocking, coverage, and configuration. Assumes you already know Python (see this library's python-basics course) and general testing vocabulary (see testing-in-software-engineering) — this course is about the pytest tool itself.",
   "image": "cover.png",
   "file": "testing-with-pytest.zip",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "tags": [
     "pytest",
     "python",
@@ -17,6 +17,11 @@
       "version": "1.0.0",
       "date": "2026-08-26",
       "notes": "Initial release — 23 decks, each pack with a preview card teaching the concept before its graded main card and practice cards."
+    },
+    {
+      "version": "1.0.1",
+      "date": "2026-09-24",
+      "notes": "Wrapped code, commands and file names in backticks so they render as code (91 card(s))."
     }
   ],
   "toc": [
