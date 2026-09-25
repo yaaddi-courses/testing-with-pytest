@@ -47,6 +47,7 @@
     "Configuring pytest: pyproject.toml and ini Options",
     "Organizing a Test Suite: src Layout",
     "Debugging Failing Tests: -v, -x, -k, --pdb",
-    "Common pytest Anti-Patterns and Best Practices"
+    "Common pytest Anti-Patterns and Best Practices",
+    "Recap: Key Terms"
   ]
 }

@@ -40,7 +40,7 @@ id,unit_id,type,role,related_main_id,prompt,options,correct_index,image,audio,ex
 38,3,true_false,exercise,33,`utils.py` is auto-discovered as a test.,,false,,,It doesn't start with test_ or end in `_test.py`
 39,3,select_blank,exercise,33,Test files start or end with ___.,test|main|util,0,,,"To ensure pytest can find them, both the test files and the functions within those files should use a `test` prefix. This consistent naming convention is key to discovery."
 40,3,categorize,exercise,33,Sort each filename by discovery.,test_math.py↔Discovered|math_test.py↔Discovered|utils.py↔Not discovered|helpers.py↔Not discovered,,,,"Files that adhere to standard testing conventions, particularly those prefixed with 'test_', are considered discovered test files. Generic utility names like utils or helpers usually aren't flagged unless they contain specific tests."
-41,3,multiple_choice,main,,pytest discovers functions named:,test_*|check_*|run_*,0,,,"def test_login(): is picked up automatically; def check_login() is not, no matter the file it's in."
+41,3,multiple_choice,main,,pytest discovers functions named:,test_*|check_*|run_*,0,,,"`def test_login():` is picked up automatically; `def check_login()` is not, no matter the file it's in."
 42,3,true_false,preview,41,Functions named test_login are discovered.,,true,,,"Yes, any function starting with 'test_' is automatically recognized by the testing framework as a valid test case and thus considered discovered."
 43,3,true_false,exercise,41,`check_login()` is auto-discovered by pytest.,,false,,,It doesn't start with test_
 44,3,select_blank,exercise,41,Test functions must start with ___.,test_|check_|run_,0,,,"They must begin with 'test_' to signal to the framework that they are executable tests; otherwise, the framework will ignore them completely."
@@ -106,7 +106,7 @@ id,unit_id,type,role,related_main_id,prompt,options,correct_index,image,audio,ex
 162,7,true_false,exercise,161,Narrower scope means safer test isolation.,,true,,,"Function scope gives every test its own fresh instance, so nothing carries over."
 163,7,multiple_choice,exercise,161,Sharing fixture state risks:,Test leakage|Faster runs|Nothing,0,,,Sharing state risks test leakage because one test might leave behind data or side effects that unintentionally cause another test to fail or pass incorrectly.
 164,7,multiple_choice,exercise,161,Function scope favors:,Isolation|Speed|Neither,0,,,"Function scope is best for isolation because fixtures are guaranteed to run before every single test, ensuring each test starts with a clean environment."
-165,7,multiple_choice,exercise,161,Session scope favors:,Speed|Isolation|Neither,0,,,"Session scope favors speed because the fixture setup only runs once for the entire test suite, avoiding redundant and time-consuming initialization between tests."
+165,7,true_false,exercise,161,Function scope creates a fresh fixture per test.,,true,,,Function scope is the default: a new fixture for every test.
 166,7,select_blank,exercise,161,Wider scope means ___ but riskier tests.,faster|slower|safer,0,,,"Wider scope allows you to test more functionality at once, which is efficient but increases the chance of encountering unexpected bugs or edge cases."
 167,7,true_false,exercise,161,Class scope is broader than function scope.,,true,,,"Class scope defines variables accessible by all methods within a class instance, making it broader than function scope which only sees local variables."
 168,7,true_false,exercise,161,Broad scope can leak state between tests.,,true,,,"A session-scoped fixture wrapping a list, for example, keeps whatever a test appended to it for every test after."
@@ -129,7 +129,7 @@ id,unit_id,type,role,related_main_id,prompt,options,correct_index,image,audio,ex
 185,8,multiple_choice,exercise,179,Nested `conftest.py` mirrors your:,Folder structure|File imports|Class names,0,,,"The location of the `conftest.py` file dictates which tests discover it, so nesting them mirrors your actual directory layout. It's about where the files live in the project structure, not what they contain or how you import things."
 186,8,multiple_choice,exercise,179,Multiple `conftest.py` files can:,Coexist nested|Never coexist|Conflict always,0,,,They are designed to work together; you can nest multiple `conftest.py` files in different folders. The test framework intelligently merges these fixtures from all discovered locations without causing conflicts.
 187,9,true_false,preview,188,tmp_path gives each test a fresh folder.,,true,,,"It's a pathlib.Path pointing at a brand-new, empty temp directory just for that test."
-188,9,multiple_choice,main,,tmp_path fixture provides a:,Temp folder|Network socket|Database,0,,,"def test_write(tmp_path): (tmp_path / 'out.txt').write_text('hi') — no real filesystem cleanup code needed, pytest handles it."
+188,9,multiple_choice,main,,tmp_path fixture provides a:,Temp folder|Network socket|Database,0,,,`def test_write(tmp_path): (tmp_path / 'out.txt').write_text('hi')` needs no filesystem cleanup code; pytest handles it.
 189,9,true_false,exercise,188,tmp_path is unique to each test.,,true,,,"This is true because it guarantees that every single test run gets its own isolated, clean temporary directory. This isolation prevents tests from accidentally interfering with each other's setup or cleanup."
 190,9,multiple_choice,exercise,188,tmp_path returns a:,Path object|String only|List,0,,,"It's a pathlib.Path, so you can use / to join paths directly."
 191,9,select_blank,exercise,188,tmp_path avoids polluting your ___ directory.,project|memory|network,0,,,"Using tmp_path ensures that temporary files are stored in a system-managed location, keeping your primary project directory clean and clutter-free."
@@ -160,7 +160,7 @@ id,unit_id,type,role,related_main_id,prompt,options,correct_index,image,audio,ex
 212,9,multiple_choice,exercise,206,monkeypatch.delenv removes a:,Env variable|Test file|Fixture,0,,,"The name `delenv` clearly indicates that it is used to delete an environment variable. It cannot remove test files or fixtures, as those require different cleanup methods."
 213,9,true_false,exercise,206,monkeypatch changes leak into other tests.,,false,,,That's exactly what monkeypatch is designed to prevent.
 214,10,true_false,preview,215,yield splits a fixture into setup and teardown.,,true,,,Everything before yield is setup; everything after it is cleanup.
-215,10,multiple_choice,main,,Code after yield in a fixture is:,Teardown|Setup|Ignored,0,,,def resource(): r = open_conn(); yield r; r.close() — the close() call only runs after the test finishes using r.
+215,10,multiple_choice,main,,Code after yield in a fixture is:,Teardown|Setup|Ignored,0,,,"In `def resource(): r = open_conn(); yield r; r.close()`, the `close()` call only runs after the test finishes using `r`."
 216,10,true_false,exercise,215,Code before yield runs as setup.,,true,,,"That's correct; the code placed before `yield` acts as the setup phase, running necessary initialization steps. The code after `yield` handles the teardown or cleanup."
 217,10,multiple_choice,exercise,215,"After yield, cleanup code is:",Teardown|Setup|Unused,0,,,"The code that runs after the test logic has completed is called teardown, and this is where you handle cleanup tasks. Setup always executes before the test starts."
 218,10,true_false,exercise,215,A fixture can yield a value tests use.,,true,,,Whatever you pass to yield becomes the fixture's value inside the test function.
@@ -220,7 +220,7 @@ def test_it(n):
 264,12,true_false,exercise,261,Every fixture automatically has a request.param.,,false,,,Only fixtures declared with params= have one — a plain fixture has nothing to read there.
 265,12,select_blank,exercise,261,request.param changes with each fixture ___.,instance|file|import,0,,,
 266,12,multiple_choice,exercise,261,request is used inside:,The fixture|Test only|Never,0,,,You use `request` inside fixtures because they are the functions responsible for setting up and providing contextual information to other parts of your code.
-267,12,true_false,exercise,261,You must accept request as a fixture argument.,,true,,,"def n(request): — without naming it as a parameter, the fixture can't reach request.param."
+267,12,true_false,exercise,261,You must accept request as a fixture argument.,,true,,,"Without naming `request` as a parameter of `def n(request):`, the fixture can't reach `request.param`."
 268,12,code_fill,exercise,261,Complete the fixture reading its param.,"@pytest.fixture(params=[1, 2])
 def n(request):
     return request.___|param",,,,You need to use request.param because that is how pytest makes the currently selected value from the params list available inside your fixture function.
@@ -241,12 +241,12 @@ def n(request):
 315,13,true_false,exercise,309,xfail deletes the test from the suite.,,false,,,"It keeps running the test, it just doesn't fail the build over it."
 316,13,multiple_choice,exercise,309,strict=True on xfail turns XPASS into a?,Failure|Pass|Skip,0,,,"With strict=True, an unexpected pass is treated as a real failure — handy once a bug gets fixed."
 317,13,select_blank,exercise,309,xfail takes an optional ___ string.,reason|fixture|tag,0,,,"The optional string provided to xfail is a 'reason,' which allows you to document why this test is expected to fail right in the code."
-318,14,multiple_choice,main,,A custom marker looks like?,@pytest.mark.slow|def slow():|import slow,0,,,"You can tag tests with any name, e.g. @pytest.mark.slow, then run just that group with `-m` slow."
+318,14,multiple_choice,main,,A custom marker looks like?,@pytest.mark.slow|`def slow():`|import slow,0,,,"You can tag tests with any name, e.g. @pytest.mark.slow, then run just that group with `-m` slow."
 319,14,true_false,preview,318,@pytest.mark.slow tags a test as slow.,,true,,,
 320,14,true_false,exercise,318,Custom markers can have any name.,,true,,,
-321,14,multiple_choice,exercise,318,How do you run only slow tests?,-m slow|-k fast|--slow,0,,,`-m` slow filters down to tests marked @pytest.mark.slow.
+321,14,multiple_choice,exercise,318,How do you run only slow tests?,`-m` slow|`-k` fast|`--slow`,0,,,`-m` slow filters down to tests marked @pytest.mark.slow.
 322,14,short_answer,exercise,318,Which flag runs only marked tests?,-m,,,,pytest `-m` slow runs only tests tagged @pytest.mark.slow.
-323,14,multiple_choice,exercise,318,Custom markers are defined using?,@pytest.mark.name|def name():|class Name:,0,,,
+323,14,multiple_choice,exercise,318,Custom markers are defined using?,@pytest.mark.name|`def name():`|class Name:,0,,,
 324,14,true_false,exercise,318,A test can have multiple markers.,,true,,,Stack them: @pytest.mark.slow and @pytest.mark.integration on the same test.
 325,14,multiple_choice,exercise,318,Excluding a marker uses which keyword?,not|and|or,0,,,"`-m` ""not slow"" runs everything except tests marked slow."
 326,14,multiple_choice,main,,Unregistered markers by default cause?,A warning|A crash|Nothing,0,,,"pytest just warns ""Unknown marker"" unless `--strict-markers` is on, which turns that into a real error."
@@ -255,8 +255,8 @@ def n(request):
 329,14,select_blank,exercise,326,Markers are registered in the ___ section.,markers|fixtures|imports,0,,,"In `pyproject.toml`: [tool.pytest.ini_options] markers = [""slow: marks slow tests""]."
 330,14,multiple_choice,exercise,326,Registering a marker also adds a?,Description|New fixture|Test file,0,,,
 331,14,true_false,exercise,326,Registration is required to use any marker.,,false,,,Registration is optional unless `--strict-markers` is enabled — then it's required.
-332,14,multiple_choice,exercise,326,Where do you list registered markers?,pyproject.toml|conftest.py|test file,0,,,"Project markers are generally defined in your project's configuration file, which is `pyproject.toml`. You wouldn't list them in a conftest or test file unless you were doing something highly specialized."
-333,14,multi_select,exercise,326,Which help catch marker typos?,--strict-markers|Registering markers|Ignoring warnings|Renaming tests,0|1,,,Registering every marker's name and turning on `--strict-markers` together turn a silent typo into a loud failure.
+332,14,multiple_choice,exercise,326,Where do you list registered markers?,`pyproject.toml`|`conftest.py`|test file,0,,,"Project markers are generally defined in your project's configuration file, which is `pyproject.toml`. You wouldn't list them in a conftest or test file unless you were doing something highly specialized."
+333,14,multi_select,exercise,326,Which help catch marker typos?,`--strict-markers`|Registering markers|Ignoring warnings|Renaming tests,0|1,,,Registering every marker's name and turning on `--strict-markers` together turn a silent typo into a loud failure.
 334,15,code_fill,main,,Fill in what pytest.raises expects here.,"with pytest.raises(___):
     int(""x"")|ValueError",,,,`pytest.raises(ValueError)` as a context manager asserts the code inside raises exactly that exception — the test fails if it doesn't.
 335,15,true_false,preview,334,pytest.raises checks a block raises an exception.,,true,,,That’s correct; the context manager `pytest.raises` is specifically designed to assert that a block of code will fail by raising an expected exception type.
@@ -303,7 +303,7 @@ def n(request):
 376,17,select_blank,exercise,370,side_effect can also be a ___ function.,custom|missing|broken,0,,,"You can pass any callable object, like your own custom function, to `side_effect` so it executes instead of returning a default value."
 377,17,multiple_choice,exercise,370,mock.call_count tells you the?,Call count|Return value|Argument type,0,,,This attribute is a simple integer that tracks exactly how many times the mock object has been invoked during the test run.
 378,17,true_false,exercise,370,side_effect and return_value do the same thing.,,false,,,return_value gives a fixed value; side_effect can vary per call or raise an error.
-379,18,multiple_choice,main,,pytest-cov adds which command-line flag?,--cov|--mock|--verbose,0,,,pytest `--cov`=mypackage runs the suite and reports what percentage of mypackage's lines actually executed.
+379,18,multiple_choice,main,,pytest-cov adds which command-line flag?,`--cov`|`--mock`|`--verbose`,0,,,pytest `--cov`=mypackage runs the suite and reports what percentage of mypackage's lines actually executed.
 380,18,true_false,preview,379,`--cov` reports what percent of code ran.,,true,,,
 381,18,true_false,exercise,379,`--cov` requires installing pytest-cov separately.,,true,,,`pip install` pytest-cov adds the `--cov` option — it isn't built into pytest.
 382,18,select_blank,exercise,379,--cov=mypackage measures coverage of that ___.,package|test|fixture,0,,,"The `--cov` flag specifies the module or package you want to measure coverage for, rather than just a single test file or fixture."
@@ -327,7 +327,7 @@ def n(request):
 452,19,multiple_choice,main,,What does pytest-xdist add to pytest?,Parallel runs|Slower tests|New syntax,0,,,pytest-xdist is a plugin that splits your test suite across multiple worker processes so they run at the same time instead of one after another.
 453,19,select_blank,exercise,452,pytest -n auto splits tests across ___.,workers|files|imports,0,,,"When you use `-n auto`, pytest intelligently determines the optimal number of parallel processes (workers) it can safely run based on your machine's available resources."
 454,19,true_false,exercise,452,`-n` auto picks the worker count automatically.,,true,,,It looks at your CPU's core count and spins up that many workers for you.
-455,19,multiple_choice,exercise,452,Which flag enables parallel test runs?,-n|-v|-x,0,,,"The `-n` flag stands for 'number of workers,' which tells pytest how many parallel processes it should use to run your tests simultaneously."
+455,19,multiple_choice,exercise,452,Which flag enables parallel test runs?,`-n`|`-v`|`-x`,0,,,"The `-n` flag stands for 'number of workers,' which tells pytest how many parallel processes it should use to run your tests simultaneously."
 456,19,multiple_choice,exercise,452,Which package provides pytest `-n`?,pytest-xdist|pytest-cov|pytest-mock,0,,,"The ability to run tests in parallel using the `-n` flag is provided by `pytest-xdist`, as it handles the complex logic of distributing tests across multiple processes."
 457,19,true_false,exercise,452,xdist still runs every test in one process.,,false,,,Each worker is its own separate process -- that's exactly what makes them run in parallel.
 458,19,select_blank,exercise,452,Each xdist worker runs in its own ___.,process|thread|file,0,,,"Xdist uses separate operating system processes for each worker to ensure complete isolation, which prevents shared memory issues that threads might encounter. This process separation is key to reliable parallel testing."
@@ -373,22 +373,22 @@ testpaths = [""___""]|tests",,,,"testpaths tells pytest which directory to searc
     test_mypkg.py|tests",,,,"tests/ sits beside src/, never inside it, so test code is never mistaken for shippable code."
 494,21,true_false,exercise,487,Flat layout can accidentally shadow the installed package.,,true,,,"Yes, if your local project structure has a module name that matches an installed library, Python might incorrectly load your local version instead of the intended package."
 495,22,true_false,preview,496,`-x` stops the test run at the first failure.,,true,,,"That is correct; using `-x` tells pytest to halt execution immediately upon encountering the very first failing test case, which is great for quick debugging."
-496,22,multi_select,main,,Which flags narrow down a test run?,-x|-k|-v|--pdb,0|1,,,`-x` stops the whole run the moment one test fails; `-k` lets you run only tests whose name matches a keyword expression -- both narrow what actually runs.
+496,22,multi_select,main,,Which flags narrow down a test run?,`-x`|`-k`|`-v`|`--pdb`,0|1,,,`-x` stops the whole run the moment one test fails; `-k` lets you run only tests whose name matches a keyword expression -- both narrow what actually runs.
 497,22,true_false,exercise,496,`-x` stops after the first failing test.,,true,,,"Yes, the `-x` flag causes pytest to stop running tests as soon as one fails, preventing you from wasting time on subsequent failures."
 498,22,select_blank,exercise,496,-k selects tests by ___.,keyword|line number|file size,0,,,"The `-k` flag allows you to filter and run only those tests that contain a specific keyword in their name, making targeted testing easy."
 499,22,multiple_choice,exercise,496,pytest `-k` login runs tests:,Matching login|Every test|None,0,,,"Since `-k` filters by keywords, running pytest `-k` login will only execute tests whose names contain the word 'login,' ignoring all others."
 500,22,true_false,exercise,496,`-x` keeps running after a failure.,,false,,,That's the opposite of `-x` -- it halts immediately so you fix one failure at a time.
-501,22,multiple_choice,exercise,496,Which flag runs tests by name pattern?,-k|-x|-v,0,,,"The `-k` flag is designed for filtering tests by name pattern, allowing you to run only a specific subset of tests based on keywords."
+501,22,multiple_choice,exercise,496,Which flag runs tests by name pattern?,`-k`|`-x`|`-v`,0,,,"The `-k` flag is designed for filtering tests by name pattern, allowing you to run only a specific subset of tests based on keywords."
 502,22,true_false,exercise,496,`-k` accepts expressions like not slow.,,true,,,"Yes, the `-k` flag supports advanced expression syntax, letting you use logical operators like `not` for highly precise filtering of test names."
 503,22,short_answer,exercise,496,Flag that stops at the first failure?,-x,,,,"The `-x` flag is your tool for early exit; it tells the runner to stop immediately upon encountering the very first failing test, saving you time."
 504,22,match_pairs,exercise,496,Match each flag to what it does.,-x↔Stop early|-k↔Keyword filter,,,,"This pairing is correct because `-x` forces an immediate halt on failure, while `-k` specifically limits execution only to tests matching provided keywords or patterns."
 505,22,true_false,preview,506,`-v` prints more detail about each test.,,true,,,
-506,22,multi_select,main,,Which flags show more detail on failure?,-v|--pdb|-x|-k,0|1,,,`-v` prints each test's full name and result instead of just dots; `--pdb` drops you straight into an interactive debugger right where a test failed.
+506,22,multi_select,main,,Which flags show more detail on failure?,`-v`|`--pdb`|`-x`|`-k`,0|1,,,`-v` prints each test's full name and result instead of just dots; `--pdb` drops you straight into an interactive debugger right where a test failed.
 507,22,true_false,exercise,506,`-v` prints each test's name and result.,,true,,,That's right; the verbose (`-v`) flag provides detailed output by printing the name and result for every single test executed.
 508,22,select_blank,exercise,506,--pdb drops you into a ___ on failure.,debugger|new file|log viewer,0,,,"The `--pdb` flag specifically invokes Python's built-in debugger, allowing you to inspect the program state right where it failed. It doesn't create a new file or just open a general log viewer."
 509,22,multiple_choice,exercise,506,`-v` mainly increases output:,Detail|Speed|File count,0,,,"The `-v` flag stands for 'verbose,' meaning it significantly increases the amount of output you see, providing much greater operational detail about what the script is doing."
 510,22,true_false,exercise,506,`--pdb` pauses your terminal forever.,,false,,,"It only pauses at the failing line -- typing c continues, q quits back to your shell."
-511,22,multiple_choice,exercise,506,Which flag opens an interactive debugger?,--pdb|-v|-k,0,,,"You need to use `--pdb` because that is the specific flag designed to drop execution into the Python Debugger, allowing you to step through code interactively."
+511,22,multiple_choice,exercise,506,Which flag opens an interactive debugger?,`--pdb`|`-v`|`-k`,0,,,"You need to use `--pdb` because that is the specific flag designed to drop execution into the Python Debugger, allowing you to step through code interactively."
 512,22,true_false,exercise,506,Plain pytest output shows a dot per test.,,true,,,`-v` replaces those terse dots with one line per test naming it and its result.
 513,22,short_answer,exercise,506,Flag that gives verbose output?,-v,,,,"The single hyphen and 'v' (`-v`) is the standard shorthand flag used to activate verbose output, giving you more operational details about the script's execution."
 514,22,match_pairs,exercise,506,Match each flag to what it does.,-v↔More detail|--pdb↔Opens debugger,,,,"`-v` is used for verbose output, giving you more operational details, while `--pdb` specifically triggers Python's interactive debugging session upon failure."
@@ -409,3 +409,12 @@ testpaths = [""___""]|tests",,,,"testpaths tells pytest which directory to searc
 529,23,multiple_choice,exercise,524,Best practice keeps fixture scope:,Minimal|Broad|Global,0,,,
 530,23,true_false,exercise,524,Broad fixture scope trades isolation for speed.,,true,,,"This is true because while a broad scope saves time by reusing setup, it sacrifices isolation; if one test fails, you don't know which specific piece of code caused the issue due to shared state."
 531,23,categorize,exercise,524,Sort each habit as good or bad.,Narrow fixture scope↔Good practice|Session fixture everywhere↔Anti-pattern|Testing behavior↔Good practice|Testing internals↔Anti-pattern,,,,"Narrow scopes and testing public behavior are preferred because they keep tests isolated and focused on user experience. Session fixtures or internal testing should be avoided as they create brittle, hard-to-maintain anti-patterns."
+532,24,true_false,preview,533,This recap revisits assertEqual.,,true,,,"Right: assertEqual means unittest equality check, and the cards that follow revisit it with other terms."
+533,24,match_pairs,main,,Match each term to its meaning.,assertEqual↔unittest equality check|test discovery↔Finds tests automatically|assertion rewriting↔Readable assert failures|session scope↔Built once,,,,Each term is paired with its plain-language meaning.
+534,24,match_pairs,exercise,533,Pair every term with its gloss.,class scope↔Once per class|test isolation↔No cross-test leaks|tmp_path↔Temporary directory fixture|capsys↔Captures printed output,,,,Each term is paired with its plain-language meaning.
+535,24,match_pairs,exercise,533,Which meaning fits each term?,capsys↔Captures printed output|readouterr↔Returns captured output|monkeypatch↔Safe temporary changes|skipif↔Skip conditionally,,,,Each term is paired with its plain-language meaning.
+536,24,match_pairs,exercise,533,Connect the terms to what they mean.,xfail↔Expected to fail|XPASS↔Unexpectedly passed|excinfo↔Caught exception details|pytest.warns↔Expects a warning,,,,Each term is paired with its plain-language meaning.
+537,24,match_pairs,exercise,533,Match the terms and meanings.,pytest.warns↔Expects a warning|unittest↔Built-in framework|return_value↔Fixed mock result|side_effect↔Complex mock behaviour,,,,Each term is paired with its plain-language meaning.
+538,24,match_pairs,exercise,533,Link every term to its idea.,assert_called_with↔Checks mock arguments|branch coverage↔Both branch sides|addopts↔Default command flags|testpaths↔Where to look,,,,Each term is paired with its plain-language meaning.
+539,24,match_pairs,exercise,533,What does each term mean?,testpaths↔Where to look|ini options↔pytest settings|src layout↔Package in src|editable install↔Live-linked package,,,,Each term is paired with its plain-language meaning.
+540,24,true_false,exercise,533,assertEqual means finds tests automatically.,,false,,,No: assertEqual means unittest equality check.

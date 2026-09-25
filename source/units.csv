@@ -22,3 +22,4 @@ id,title,description,min_level,section,image,section_image
 21,Organizing a Test Suite: src Layout,Why a separate tests directory next to src avoids import ambiguity.,4,Plugins & Tooling,unit21.png,
 22,"Debugging Failing Tests: -v, -x, -k, --pdb",The CLI flags for narrowing down a failure and stepping into it.,4,Plugins & Tooling,unit22.png,
 23,Common pytest Anti-Patterns and Best Practices,"Over-broad fixtures, testing implementation instead of behavior, and fixture scope misuse.",4,Plugins & Tooling,unit23.png,
+24,Recap: Key Terms,Quick matching practice that revisits the key terms from earlier decks.,1,Review,unit24.png,
