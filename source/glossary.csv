@@ -70,3 +70,24 @@ HTTP,HyperText Transfer Protocol: the protocol web browsers and servers use to e
 API,Application programming interface: a defined way for one program to ask another for something.,https://en.wikipedia.org/wiki/API,
 CPU,Central processing unit: the processor that executes a program's instructions.,https://en.wikipedia.org/wiki/Central_processing_unit,
 OS,Operating system: the software that manages a computer's hardware and runs other programs.,https://en.wikipedia.org/wiki/Operating_system,
+_check.py,A file name ending that pytest does not collect by default; test files must end in _test.py or start with test_.,https://docs.pytest.org/en/stable/explanation/goodpractices.html,37
+_spec.py,A file name ending that pytest does not collect by default; only test_*.py and *_test.py are found.,https://docs.pytest.org/en/stable/explanation/goodpractices.html,37
+__init__,The Python method that sets up a new object; pytest cannot collect test classes that define it.,https://docs.pytest.org/en/stable/explanation/anatomy.html,46
+False,The Python boolean value meaning no; an assert on it fails the test.,https://docs.python.org/3/library/constants.html#False,49
+True,The Python boolean value meaning yes; an assert on it passes.,https://docs.python.org/3/library/constants.html#True,50
+GUI,"Graphical user interface: the windows, buttons and menus a person clicks to use a program.",https://en.wikipedia.org/wiki/Graphical_user_interface,204
+--slow,Not a built-in pytest flag; slow tests are chosen with a marker via -m slow.,https://docs.pytest.org/en/stable/how-to/mark.html,321
+BaseException,"The root of Python's exception hierarchy; catching it also catches exit signals, so it is rarely used.",https://docs.python.org/3/library/exceptions.html#BaseException,341
+KeyError,The Python exception raised when a dictionary key is not found.,https://docs.python.org/3/library/exceptions.html#KeyError,357
+--mock,Not a pytest-cov flag; mocking comes from separate tools such as unittest.mock.,https://pytest-cov.readthedocs.io/en/latest/,379
+--verbose,The pytest flag -v that prints one line per test with its result.,https://docs.pytest.org/en/stable/how-to/output.html,379
+package.json,The file that describes a JavaScript project; pytest does not read its settings.,https://docs.npmjs.com/cli/configuring-npm/package-json,470
+Dockerfile,A text file of instructions for building a Docker image; pytest does not read its settings.,https://docs.docker.com/reference/dockerfile/,470
+PyPI,The Python Package Index: the public website where Python packages are published and installed from.,https://pypi.org/,490
+asserting,Checking that a condition is true in a test and failing the test if it is not.,https://docs.pytest.org/en/stable/how-to/assert.html,1
+asserts,Statements that check a condition and fail the test if it is false.,https://docs.pytest.org/en/stable/how-to/assert.html,1
+fixtures,Reusable pytest functions that prepare data or resources for tests.,https://docs.pytest.org/en/stable/how-to/fixtures.html,74
+yield fixtures,Fixtures that use yield to hand a resource to a test and run cleanup code afterwards.,https://docs.pytest.org/en/stable/how-to/fixtures.html#teardown-cleanup-aka-fixture-finalization,215
+markers,"Labels added to tests with decorators so they can be selected, skipped or configured.",https://docs.pytest.org/en/stable/how-to/mark.html,318
+skips,"Tests that pytest deliberately does not run, usually for a stated reason.",https://docs.pytest.org/en/stable/how-to/skipping.html,301
+src-layout,A project layout that keeps package code in a src folder so tests import the installed package.,https://docs.pytest.org/en/stable/explanation/goodpractices.html,486
