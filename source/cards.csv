@@ -418,3 +418,46 @@ testpaths = [""___""]|tests",,,,"testpaths tells pytest which directory to searc
 538,24,match_pairs,exercise,533,Link every term to its idea.,assert_called_with↔Checks mock arguments|branch coverage↔Both branch sides|addopts↔Default command flags|testpaths↔Where to look,,,,Each term is paired with its plain-language meaning.
 539,24,match_pairs,exercise,533,What does each term mean?,testpaths↔Where to look|ini options↔pytest settings|src layout↔Package in src|editable install↔Live-linked package,,,,Each term is paired with its plain-language meaning.
 540,24,true_false,exercise,533,assertEqual means finds tests automatically.,,false,,,No: assertEqual means unittest equality check.
+541,1,multiple_choice,exam,,A pytest test can be a plain:,Function|Class|Module,0,,,No test class is required.
+542,1,multiple_choice,exam,,pytest checks results using plain:,`verify`|`assert`|`check`,1,,,It rewrites `assert` to show useful failure details.
+543,2,multiple_choice,exam,,Which command installs pytest?,`pip run`|`pip test`|`pip install`,2,,,It adds pytest to your Python environment.
+544,2,multiple_choice,exam,,Typing `pytest` alone does what?,Runs tests|Installs tests|Deletes tests,0,,,It discovers and runs every test it can find.
+545,3,multiple_choice,exam,,pytest discovers files starting with:,`run_`|`test_`|`check_`,1,,,A file like `test_math.py` is found automatically.
+546,3,true_false,exam,,A function named `check_login` is discovered as a test.,,false,,,Only names like `test_login` are picked up.
+547,4,multiple_choice,exam,,A test fails when `assert` sees:,False|True|None,0,,,An expression that evaluates to false fails the test.
+548,4,multiple_choice,exam,,A custom assert message follows a:,Dash|Comma|Colon,1,,,It only shows if the assert fails.
+549,5,multiple_choice,exam,,On failure pytest shows the actual:,Authors|Dates|Values,2,,,Assertion rewriting reveals what each side held.
+550,6,multiple_choice,exam,,A fixture is declared with:,`@pytest.fixture`|`@pytest.setup`|`@pytest.data`,0,,,It marks a setup function.
+551,6,multiple_choice,exam,,A test requests a fixture by its:,Class name|Parameter name|File name,1,,,pytest matches the parameter to the fixture.
+552,7,multiple_choice,exam,,By default a fixture's scope is:,Session|Module|Function,2,,,It reruns for every test.
+553,7,true_false,exam,,A broader fixture scope is usually faster.,,true,,,"There are fewer setup runs, but tests may share state."
+554,8,multiple_choice,exam,,`conftest.py` fixtures need no:,Parameter|Import|Name,1,,,Any test in that folder can use them.
+555,8,multiple_choice,exam,,A closer `conftest.py` fixture:,Is ignored|Deletes parent|Overrides parent,2,,,Only tests beneath it see the override.
+556,9,multiple_choice,exam,,The `tmp_path` fixture gives each test a fresh:,Folder|Database|Network,0,,,No cleanup code is needed.
+557,9,multiple_choice,exam,,The `capsys` fixture captures a test's:,Network calls|Printed output|Disk usage,1,,,You read it with `capsys.readouterr()`.
+558,9,multiple_choice,exam,,`monkeypatch` changes things only:,Permanently|Silently|Temporarily,2,,,pytest reverts it right after the test.
+559,10,multiple_choice,exam,,Code after `yield` in a fixture is:,Teardown|Setup|Discovery,0,,,It runs after the test finishes.
+560,10,true_false,exam,,Teardown code is skipped when a test fails.,,false,,,pytest guarantees teardown runs regardless.
+561,11,multiple_choice,exam,,`parametrize` runs one test:,Once|Never|Many times,2,,,Each input becomes a separate test case.
+562,13,multiple_choice,exam,,Which decorator parametrizes a test?,`@pytest.mark.parametrize`|`@pytest.fixture`|`@pytest.skip`,0,,,It lives on `pytest.mark`.
+563,12,multiple_choice,exam,,A parametrized fixture reruns for:,No test|Every test|First test,1,,,Each parameter value produces a new run.
+564,12,multiple_choice,exam,,Which attribute holds a fixture's current parameter?,`request.value`|`request.item`|`request.param`,2,,,The fixture reads it from `request`.
+565,14,multiple_choice,exam,,Which marker always skips a test?,`@pytest.mark.skip`|`@pytest.mark.xfail`|`@pytest.mark.slow`,0,,,`skipif` skips only when a condition is true.
+566,13,multiple_choice,exam,,A test marked `xfail` is expected to:,Hang|Fail|Pass,1,,,A known failing test stays in the suite.
+567,14,multiple_choice,exam,,Tests can be tagged with a custom:,Folder|Import|Marker,2,,,For example `@pytest.mark.slow`.
+568,14,multiple_choice,exam,,An unregistered marker usually causes a:,Warning|Crash|Deletion,0,,,`--strict-markers` turns it into an error.
+569,15,multiple_choice,exam,,`pytest.raises` checks that code:,Prints text|Raises error|Returns value,1,,,It works as a context manager.
+570,15,multiple_choice,exam,,The `match=` argument checks the exception's:,Type|Module|Message,2,,,It compares the message with a regular expression.
+571,16,multiple_choice,exam,,`pytest.warns` checks that code issues a:,Warning|Exception|Fixture,0,,,It works much like `pytest.raises`.
+572,17,multiple_choice,exam,,pytest-mock provides the fixture:,`patcher`|`mocker`|`faker`,1,,,It undoes every patch after the test.
+573,17,multiple_choice,exam,,`assert_called_with` checks how a mock was:,Created|Imported|Called,2,,,It compares the arguments of the call.
+574,18,multiple_choice,exam,,pytest-cov reports what percent of code:,Ran|Failed|Changed,0,,,Use the `--cov` flag.
+575,18,multiple_choice,exam,,Branch coverage also tracks:,Test names|If/else paths|File sizes,1,,,Line coverage only checks that a line ran.
+576,19,multiple_choice,exam,,pytest-xdist runs tests in:,Reverse order|Sleep mode|Parallel,2,,,It splits the suite across worker processes.
+577,19,multiple_choice,exam,,Parallel runs can expose tests sharing:,State|Names|Comments,0,,,A shared file or global can cause failures.
+578,20,multiple_choice,exam,,pytest settings can live in:,`.gitignore`|`pyproject.toml`|`README.md`,1,,,Everyone then uses the same configuration.
+579,21,multiple_choice,exam,,"In src layout, app code lives under:",`tests/`|`docs/`|`src/`,2,,,The `tests/` folder sits next to it.
+580,22,multiple_choice,exam,,Which flag stops at the first failure?,`-x`|`-v`|`-k`,0,,,`-k` selects tests by name.
+581,22,multiple_choice,exam,,Which flag drops you into the debugger?,`-k`|`--pdb`|`-v`,1,,,It opens at the point of failure.
+582,23,multiple_choice,exam,,Testing internals instead of behavior makes tests:,Faster|Shorter|Brittle,2,,,They break whenever the implementation changes.
+583,23,multiple_choice,exam,,A session-scoped fixture risks leaking:,State|Names|Folders,0,,,Leftover state can affect later tests.
