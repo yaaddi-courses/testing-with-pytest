@@ -4,7 +4,7 @@
   "description": "The pytest testing framework in depth: fixtures, parametrization, mocking, coverage, and configuration. Assumes you already know Python (see this library's python-basics course) and general testing vocabulary (see testing-in-software-engineering) — this course is about the pytest tool itself.",
   "image": "cover.png",
   "file": "testing-with-pytest.zip",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "tags": [
     "pytest",
     "python",
@@ -22,6 +22,11 @@
       "version": "1.0.1",
       "date": "2026-10-08",
       "notes": "The match card on fixture scopes no longer gives the class scope away by repeating the word \"class\" in its answer."
+    },
+    {
+      "version": "1.0.2",
+      "date": "2026-10-09",
+      "notes": "Glossary: every term now points at one link, so the same word never sends you to two different pages."
     }
   ],
   "toc": [

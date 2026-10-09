@@ -85,9 +85,9 @@ package.json,The file that describes a JavaScript project; pytest does not read 
 Dockerfile,A text file of instructions for building a Docker image; pytest does not read its settings.,https://docs.docker.com/reference/dockerfile/,470
 PyPI,The Python Package Index: the public website where Python packages are published and installed from.,https://pypi.org/,490
 asserting,Checking that a condition is true in a test and failing the test if it is not.,https://docs.pytest.org/en/stable/how-to/assert.html,1
-asserts,Statements that check a condition and fail the test if it is false.,https://docs.pytest.org/en/stable/how-to/assert.html,1
+asserts,Statements that check a condition and fail the test if it is false.,https://docs.python.org/3/reference/simple_stmts.html#the-assert-statement,1
 fixtures,Reusable pytest functions that prepare data or resources for tests.,https://docs.pytest.org/en/stable/how-to/fixtures.html,74
-yield fixtures,Fixtures that use yield to hand a resource to a test and run cleanup code afterwards.,https://docs.pytest.org/en/stable/how-to/fixtures.html#teardown-cleanup-aka-fixture-finalization,215
+yield fixtures,Fixtures that use yield to hand a resource to a test and run cleanup code afterwards.,https://docs.pytest.org/en/stable/how-to/fixtures.html,215
 markers,"Labels added to tests with decorators so they can be selected, skipped or configured.",https://docs.pytest.org/en/stable/how-to/mark.html,318
 skips,"Tests that pytest deliberately does not run, usually for a stated reason.",https://docs.pytest.org/en/stable/how-to/skipping.html,301
 src-layout,A project layout that keeps package code in a src folder so tests import the installed package.,https://docs.pytest.org/en/stable/explanation/goodpractices.html,486
