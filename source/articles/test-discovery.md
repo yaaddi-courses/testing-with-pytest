@@ -3,10 +3,10 @@
 **Covers:** test discovery, _test.py, _check.py, _spec.py, __init__
 
 ## No registration, only names {#overview}
-In many frameworks you must list each test somewhere, or inherit from a base class so that the runner knows it exists. pytest avoids that. It looks through your project and picks up anything that follows a few naming rules. That is convenient, but it also means that a test with the wrong name is silently ignored, which is a classic source of tests that never ran.
+In many frameworks you have to list each test somewhere, or inherit from a base class so that the runner knows the test exists. pytest avoids that. It looks through your project and picks up anything that follows a few naming rules. That is convenient, but it has a consequence you should know about: a test with the wrong name is silently ignored. This is a classic source of tests that never ran.
 
 ## test discovery {#test-discovery}
-Test discovery is how pytest finds your tests automatically, by following naming conventions, without any list or registration. When you run `pytest` with no arguments, it walks the directories, selects the files that look like test files, imports them and collects the functions and classes that look like tests.
+Test discovery is how pytest finds your tests on its own, by following naming conventions, with no list or registration. When you run `pytest` with no arguments, it walks the directories, selects the files that look like test files, imports them and collects the functions and classes that look like tests.
 
 The default rules are:
 - Files named `test_*.py` or `*_test.py`.
@@ -14,22 +14,22 @@ The default rules are:
 - Classes whose names start with `Test`, containing methods whose names start with `test`.
 - Inside classes, no `__init__` method.
 
-The collected list is what runs. `pytest --collect-only` prints it without running anything, which is the way to check what pytest will actually see.
+The collected list is what runs. `pytest --collect-only` prints that list without running anything, which is how you check what pytest will actually see.
 
 ## _test.py {#test-py}
-`_test.py` is a file-name ending that pytest recognizes, for example `login_test.py`. The other accepted form is a name that starts with `test_`, like `test_login.py`. The two are equal, so pick one and use it throughout the project.
+`_test.py` is a file-name ending that pytest recognizes, for example `login_test.py`. The other accepted form starts with `test_`, like `test_login.py`. The two are equal, so pick one and use it throughout the project.
 
 ## _check.py {#check-py}
 `_check.py` is an ending that pytest does not collect by default. A file called `login_check.py` is ignored, so the tests in it never run, and you get no warning. The same goes for names such as `login_tests.py` with an `s`, and `checks.py`.
 
 ## _spec.py {#spec-py}
-`_spec.py` is also not collected by default. The style comes from other tools, such as the JavaScript testing world, where "spec" files are normal. In pytest, only `test_*.py` and `*_test.py` are found. If you want a different pattern, set `python_files` in the configuration, for example `python_files = ["*_spec.py"]`.
+`_spec.py` is not collected by default either. This style comes from other tools, such as the JavaScript testing world, where "spec" files are normal. In pytest, only `test_*.py` and `*_test.py` are found. If you want a different pattern, set `python_files` in the configuration, for example `python_files = ["*_spec.py"]`.
 
 ## __init__ {#init}
-`__init__` is the Python method that sets up a new object. pytest cannot collect a test class that defines one, because pytest creates the class itself, without arguments, and it would not know how to call a custom constructor. It issues a warning and ignores the class. Use set-up functions for preparation instead.
+`__init__` is the Python method that sets up a new object. pytest cannot collect a test class that defines one. It creates the class itself, without arguments, so it would not know how to call a custom constructor. It issues a warning and ignores the class. Use set-up functions for preparation instead.
 
 ## A worked example {#example}
-These file names are matched against the default patterns:
+Let's match some file names against the default patterns:
 
 ```python
 import fnmatch
@@ -41,7 +41,7 @@ print(collected)
 # ['test_login.py', 'login_test.py']
 ```
 
-How to read it:
+Here is how to read it.
 
 1. `test_login.py` starts with `test_`, so it matches the first pattern.
 2. `login_test.py` ends with `_test.py`, so it matches the second.
@@ -69,12 +69,12 @@ class TestOrder:             # skipped, with a warning: it has __init__
         assert True
 ```
 
-Count the tests: 2 are collected, `test_total` and `TestCart.test_empty`. `check_discount` and `TestOrder.test_add` never run. The one with the false assertion, `check_discount`, shows how easy it is to leave a failing check unnoticed.
+Count the tests. Two are collected, `test_total` and `TestCart.test_empty`. Neither `check_discount` nor `TestOrder.test_add` ever runs. Notice that `check_discount` has a false assertion, which shows how easy it is to leave a failing check unnoticed.
 
-The remedy takes two commands: run `pytest --collect-only` and compare the count with the number that you expect, and add `-v` to see the names.
+The remedy takes two commands. Run `pytest --collect-only` and compare the count with the number you expect, and add `-v` to see the names.
 
 ## A common mistake {#mistake}
-Naming a file `checks.py` or a function `check_x`, running pytest, seeing "no tests ran" or a green result and assuming that all is well. Always confirm that the number of tests matches your expectation. Another mistake is giving a test class an `__init__`. Use a set-up function.
+A common slip is to name a file `checks.py` or a function `check_x`, run pytest, see "no tests ran" or a green result, and assume that all is well. Always confirm that the number of tests matches your expectation. Another slip is giving a test class an `__init__`. Use a set-up function.
 
 ## Key points {#key-points}
 - pytest finds tests by name: `test_*.py` or `*_test.py` files, `test*` functions and `Test*` classes.
