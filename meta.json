@@ -4,7 +4,7 @@
   "description": "The pytest testing framework in depth: fixtures, parametrization, mocking, coverage, and configuration. Assumes you already know Python (see this library's python-basics course) and general testing vocabulary (see testing-in-software-engineering) — this course is about the pytest tool itself.",
   "image": "cover.png",
   "file": "testing-with-pytest.zip",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "tags": [
     "pytest",
     "python",
@@ -27,6 +27,11 @@
       "version": "1.0.2",
       "date": "2026-10-09",
       "notes": "Glossary: every term now points at one link, so the same word never sends you to two different pages."
+    },
+    {
+      "version": "1.1.0",
+      "date": "2026-10-29",
+      "notes": "Adds Learn more articles (17, each with a worked example) for the glossary terms; tapping a term now offers \"Read the full explanation\"."
     }
   ],
   "toc": [
